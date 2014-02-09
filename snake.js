@@ -1,11 +1,11 @@
 (function(root){
   
-  SpaceSnake = root.SpaceSnake = (root.SpaceSnake || {})
+  var SpaceSnake = root.SpaceSnake = (root.SpaceSnake || {})
   var MAX_SPEED = 10;
   var MIN_SPEED = 5;
   var TURN_ANGLE = 90;
   
-  Snake = SpaceSnake.Snake = function(startPos) {
+  var Snake = SpaceSnake.Snake = function(startPos) {
     this.head = new SnakeHead(startPos);
     this.segments = [this.head];
   }
@@ -33,9 +33,9 @@
     });
   }
   
-  SnakeHead = SpaceSnake.SnakeHead = function(pos) {
+  var SnakeHead = SpaceSnake.SnakeHead = function(pos) {
     this.pos = pos;
-    this.velocity = { angle: 0, mag: 5 }
+    this.velocity = { angle: -Math.PI/2, mag: 5 }
     this.radius = 7;
     this.color = 'green';
   }
@@ -114,7 +114,7 @@
     ctx.fill();
   }
 
-  SnakeSegment = SpaceSnake.SnakeSegment = function(pos) {
+  var SnakeSegment = SpaceSnake.SnakeSegment = function(pos) {
     this.pos = pos;
     this.radius = 5;
     this.color = 'green';

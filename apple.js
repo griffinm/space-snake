@@ -1,7 +1,7 @@
 (function(root) {
   SpaceSnake = root.SpaceSnake = (root.SpaceSnake || {})
   
-  Apple = SpaceSnake.Apple = function(pos){
+  var Apple = SpaceSnake.Apple = function(pos){
     this.pos = pos;
     this.radius = 5;
   }
@@ -20,7 +20,7 @@
     ctx.fill();
   }
   
-  Bullet = SpaceSnake.Bullet = function(pos, vel) {
+  var Bullet = SpaceSnake.Bullet = function(pos, vel) {
     this.pos = pos;
     this.velocity = vel;
     this.radius = 2;
@@ -48,7 +48,7 @@
     ctx.fill();
   }
   
-  Asteroid = SpaceSnake.Asteroid = function(pos, vel, rad) {
+  var Asteroid = SpaceSnake.Asteroid = function(pos, vel, rad) {
     this.pos = pos;
     this.velocity = vel;
     this.radius = rad;
@@ -101,8 +101,5 @@
       return false;
     }
   }
-  
-  
-  
-  
+
 })(this);

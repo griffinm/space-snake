@@ -4,21 +4,21 @@
   var START_POS = [250,200];
   var BOARD_SIZE = [500, 400];
 
-  Game = SpaceSnake.Game = function() {
-    this.snake = new SpaceSnake.Snake(START_POS);
+  var Game = SpaceSnake.Game = function() {
+    this.snake = new SpaceSnake.Snake(START_POS.slice());
     this.apple = SpaceSnake.generateApple(BOARD_SIZE);
     this.bullets = [];
     this.asteroids = [];
     this.intervalIDs = [];
     this.paused = true;
     this.score = 0;
-    
-    setInterval(this.generateAsteroids.bind(this), 15000);
-    
   }
 
-  Game.newGame = function() {
-  	game = new Game();
+  SpaceSnake.newGame = function() {
+    
+    Mousetrap.unbind('n');
+    
+  	var game = new Game();
     
   	var canvas = $('#game-canvas');
     canvas.attr("width", BOARD_SIZE[0])
@@ -30,7 +30,7 @@
   	Mousetrap.bind('left', game.snake.head.turnLeft.bind(game.snake.head));
   	Mousetrap.bind('right', game.snake.head.turnRight.bind(game.snake.head));
     // Mousetrap.bind('g', game.snake.grow.bind(game.snake));
-  	Mousetrap.bind('p', game.pause.bind(game));
+  	Mousetrap.bind('p', game.play.bind(game));
     Mousetrap.bind('space', game.fire.bind(game));
     
     game.renderStartScreen();
@@ -38,16 +38,17 @@
     return game;
   }
 
-  Game.prototype.pause = function() {
+  Game.prototype.play = function() {
     if (this.paused == true){
       this.paused = false;
       this.intervalIDs[0] = setInterval(this.run.bind(this), 42);
+      this.intervalIDs[1] = setInterval(this.generateAsteroids.bind(this), 15000);
       console.log("game in play...");
     } else {
-      this.paused = true;
-      clearInterval(this.intervalIDs[0]);
-      $('#status').html("game paused...");
-      console.log("game paused...");
+      // this.paused = true;
+      // clearInterval(this.intervalIDs[0]);
+      // $('#status').html("game paused...");
+      // console.log("game paused...");
     }
   }
 
@@ -105,7 +106,11 @@
   
   Game.prototype.gameOver = function() {
     clearInterval(this.intervalIDs[0]);
-    $("#status").html("Game over!");
+    clearInterval(this.intervalIDs[1]);
+    
+    $("#status").html("Game over! Press N to start a new game.");
+    
+    Mousetrap.bind('n', SpaceSnake.newGame);
     
   }
   

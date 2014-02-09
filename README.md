@@ -10,12 +10,10 @@ fortunately you have a photon gun in your head.
 * Up: accelerate
 * Down: decelerate
 * Space: fire photon
-* P: play/pause
 
 ### Tips
 
 Asteroids start generating every 15 seconds, with a max of 5 asteroids on the field at any time.
 Your position wraps around the screen like the ship in Asteroids.
- 
-Refresh the page to start a new game.
+Unlike traditional Snake, overlapping yourself wont kill you...only colliding with an asteroid ends the game.
 

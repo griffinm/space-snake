@@ -26,8 +26,14 @@
 		text-align: right;
 	}
 	
-	#status {
+	#status, #instructions {
 		text-align: center;
+		padding: 5px 0;
+	}
+	
+	#status {
+		color: red;
+		font-weight: bold;
 	}
 	
 	</style>
@@ -39,9 +45,8 @@
 	<script src="space_snake.js"></script>
 	
 	<script>
-	var game
 		$(document).ready( function() {
-			Game.newGame()
+			SpaceSnake.newGame()
 		})
 	
 	</script>
@@ -51,10 +56,16 @@
 <body>
 	<h1>Space Snake</h1>
 	<div>
-		<div id="status"></div>
+		<div id="instructions">
+			Up/Down: accel/decel<br>
+			Left/Right: turn<br>
+			Space: fire
+		</div>
+		<div id="status">Press N to start a new game.</div>
 		<div id="score"></div>
 		<canvas id="game-canvas">
 			Your browser doesn't support HTML5 canvas! Please upgrade to a modern browser like Chrome!
 		</canvas>
+	
 	</div>
 </body>
