@@ -5,12 +5,12 @@ by eating apples, but watch out for asteroids! Getting hit by one will kill you;
 fortunately you have a photon gun in your head.
 
 ### Controls: 
-*Left: turn left
-*Right: turn right
-*Up: accelerate
-*Down: decelerate
-*Space: fire photon
-*P: play/pause
+* Left: turn left
+* Right: turn right
+* Up: accelerate
+* Down: decelerate
+* Space: fire photon
+* P: play/pause
 
 ### Tips
 
