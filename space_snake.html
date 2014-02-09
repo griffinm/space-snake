@@ -1,8 +1,8 @@
 <html>
 <head>
-	<title>Space Snake!</title>
+	<title>Space Snake</title>
 	<style>
-	body ul li{
+	body, ul, li {
 		margin: 0 0 0 0;
 		padding: 0 0 0 0;
 		font-family: sans-serif;
@@ -14,9 +14,22 @@
 	}
 	
 	div {
-		margin: 10px auto;
+		margin: 0px auto;
 		width: 500px;
 	}
+	
+	ul {
+		list-style: none;
+	}
+	
+	#score {
+		text-align: right;
+	}
+	
+	#status {
+		text-align: center;
+	}
+	
 	</style>
 	<script src="jquery-2.1.0.js"></script>
 	<script src="underscore.js"></script>
@@ -36,11 +49,10 @@
 </head>
 
 <body>
-	<h1>Space Snake!</h1>
+	<h1>Space Snake</h1>
 	<div>
-		<ul id="game-info">
-			<li id="score"></li>
-		</ul>
+		<div id="status"></div>
+		<div id="score"></div>
 		<canvas id="game-canvas">
 			Your browser doesn't support HTML5 canvas! Please upgrade to a modern browser like Chrome!
 		</canvas>

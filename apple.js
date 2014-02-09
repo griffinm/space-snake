@@ -52,12 +52,14 @@
     this.pos = pos;
     this.velocity = vel;
     this.radius = rad;
+    this.dead = false;
   }
   
   SpaceSnake.generateAsteroid = function(boardSize) {
-    var pos = [Math.floor(Math.random()*boardSize[0]), 0];
-    var velMag = Math.floor(Math.random()*7 + 1);
-    var velAng = Math.floor(Math.random()*Math.PI )
+    var pos = [Math.floor(Math.random()*boardSize[0]), 
+              Math.floor(Math.random())*boardSize[1]];
+    var velMag = Math.floor(Math.random()*5 + 2);
+    var velAng = Math.floor(Math.random()*2*Math.PI )
     var rad = Math.floor(Math.random()*5 + 5);
     
     return new Asteroid(pos, {angle: velAng, mag: velMag}, rad);
@@ -85,6 +87,21 @@
     ctx.arc(this.pos[0], this.pos[1], this.radius, 0, 2*Math.PI);
     ctx.fill();
   }
+  
+  Asteroid.prototype.hits = function(obj) {
+    var x1 = this.pos[0];
+    var y1 = this.pos[1];
+    var x2 = obj.pos[0];
+    var y2 = obj.pos[1];
+    var dist = Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+    
+    if (dist < this.radius + obj.radius) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
   
   
   

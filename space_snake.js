@@ -9,9 +9,12 @@
     this.apple = SpaceSnake.generateApple(BOARD_SIZE);
     this.bullets = [];
     this.asteroids = [];
-    this.intervalID;
+    this.intervalIDs = [];
     this.paused = true;
     this.score = 0;
+    
+    setInterval(this.generateAsteroids.bind(this), 15000);
+    
   }
 
   Game.newGame = function() {
@@ -22,39 +25,61 @@
     canvas.attr("height", BOARD_SIZE[1])
   	game.ctx = canvas[0].getContext('2d');
     
-  	Mousetrap.bind('up', game.snake.accel.bind(game.snake));
-  	Mousetrap.bind('down', game.snake.decel.bind(game.snake));
-  	Mousetrap.bind('left', game.snake.turnLeft.bind(game.snake));
-  	Mousetrap.bind('right', game.snake.turnRight.bind(game.snake));
+  	Mousetrap.bind('up', game.snake.head.accel.bind(game.snake.head));
+  	Mousetrap.bind('down', game.snake.head.decel.bind(game.snake.head));
+  	Mousetrap.bind('left', game.snake.head.turnLeft.bind(game.snake.head));
+  	Mousetrap.bind('right', game.snake.head.turnRight.bind(game.snake.head));
     Mousetrap.bind('g', game.snake.grow.bind(game.snake));
   	Mousetrap.bind('p', game.pause.bind(game));
     Mousetrap.bind('space', game.fire.bind(game));
     
     game.renderStartScreen();
-    
+    $("#status").html("Press P to begin");
     return game;
   }
 
   Game.prototype.pause = function() {
     if (this.paused == true){
       this.paused = false;
-      this.intervalID = setInterval(this.run.bind(this), 42);
-      console.log("game in play...")
+      this.intervalIDs[0] = setInterval(this.run.bind(this), 42);
+      console.log("game in play...");
     } else {
       this.paused = true;
-      clearInterval(this.intervalID);
-      console.log("game paused...")
+      clearInterval(this.intervalIDs[0]);
+      $('#status').html("game paused...");
+      console.log("game paused...");
     }
   }
 
   Game.prototype.run = function() {
+    var that = this;
+    $('#status').html("Eat apples, avoid asteroids!");
     this.render();
     
-    if (this.asteroids.length < 5) {
-      this.asteroids.push(SpaceSnake.generateAsteroid(BOARD_SIZE));
-    }
+    //check for asteroid hits
+    _.each(that.asteroids, function(asteroid) {
+      _.each(that.snake.segments, function(segment) {
+        if (asteroid.hits(segment)) {
+          return that.gameOver();
+        }
+      })
+      
+      _.each(that.bullets, function(bullet) {
+        if (asteroid.hits(bullet)) {
+          asteroid.dead = true;
+        }
+      })
+    })
     
-    if (this.snake.eatApple(this.apple)) {
+    //garbage collect dead asteroids
+    this.asteroids = _.reject(this.asteroids, function(asteroid) {
+      return asteroid.dead;
+    })
+      
+    
+    //snake eats and grow or moves
+    if (this.snake.head.hits(this.apple)) {
+      console.log("snake eats and grows!!!")
       this.snake.grow(BOARD_SIZE);
       this.score += 1;
       this.apple = SpaceSnake.generateApple(BOARD_SIZE);
@@ -62,10 +87,12 @@
       this.snake.move(BOARD_SIZE);
     }
     
+    // asteroids move
     _.each(this.asteroids, function(asteroid){
       asteroid.move(BOARD_SIZE);
     })
     
+    //bullets move
     _.each(this.bullets, function(bullet) {
       bullet.move(BOARD_SIZE);
     })
@@ -76,8 +103,22 @@
     })
   }
   
+  Game.prototype.gameOver = function() {
+    clearInterval(this.intervalIDs[0]);
+    $("#status").html("Game over!");
+    
+  }
+  
   Game.prototype.fire = function() {
-    this.bullets.push(this.snake.fire());
+    this.bullets.push(this.snake.head.fire());
+  }
+  
+  Game.prototype.generateAsteroids = function () {
+    console.log("generating asteroids");
+    if (this.asteroids.length < 5) {
+      this.asteroids.push(SpaceSnake.generateAsteroid(BOARD_SIZE));
+    }
+    
   }
 
   Game.prototype.render = function() {
