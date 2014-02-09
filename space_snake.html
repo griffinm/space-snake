@@ -1,0 +1,45 @@
+<html>
+<head>
+	<title>Space Snake!</title>
+	<style>
+	body {
+		margin: 0 0 0 0;
+		padding: 0 0 0 0;
+		font-family: sans-serif;
+	}
+	
+	h1 {
+		margin: 10px auto;
+		text-align: center;
+	}
+	
+	div {
+		margin: 30px auto;
+		width: 500px;
+	}
+	</style>
+	<script src="jquery-2.1.0.js"></script>
+	<script src="underscore.js"></script>
+	<script src="mousetrap.js"></script>
+	<script src="snake.js"></script>
+	<script src="apple.js"></script>
+	<script src="space_snake.js"></script>
+	
+	<script>
+	var game
+		$(document).ready( function() {
+			Game.newGame()
+		})
+	
+	</script>
+	
+</head>
+
+<body>
+	<h1>Space Snake!</h1>
+	<div>
+		<canvas id="space-snake">
+			Your browser doesn't support HTML5 canvas! Please upgrade to a modern browser like Chrome!
+		</canvas>
+	</div>
+</body>
