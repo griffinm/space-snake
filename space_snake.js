@@ -29,7 +29,7 @@
   	Mousetrap.bind('down', game.snake.head.decel.bind(game.snake.head));
   	Mousetrap.bind('left', game.snake.head.turnLeft.bind(game.snake.head));
   	Mousetrap.bind('right', game.snake.head.turnRight.bind(game.snake.head));
-    Mousetrap.bind('g', game.snake.grow.bind(game.snake));
+    // Mousetrap.bind('g', game.snake.grow.bind(game.snake));
   	Mousetrap.bind('p', game.pause.bind(game));
     Mousetrap.bind('space', game.fire.bind(game));
     
