@@ -2,7 +2,7 @@
 <head>
 	<title>Space Snake!</title>
 	<style>
-	body {
+	body ul li{
 		margin: 0 0 0 0;
 		padding: 0 0 0 0;
 		font-family: sans-serif;
@@ -14,7 +14,7 @@
 	}
 	
 	div {
-		margin: 30px auto;
+		margin: 10px auto;
 		width: 500px;
 	}
 	</style>
@@ -38,7 +38,10 @@
 <body>
 	<h1>Space Snake!</h1>
 	<div>
-		<canvas id="space-snake">
+		<ul id="game-info">
+			<li id="score"></li>
+		</ul>
+		<canvas id="game-canvas">
 			Your browser doesn't support HTML5 canvas! Please upgrade to a modern browser like Chrome!
 		</canvas>
 	</div>

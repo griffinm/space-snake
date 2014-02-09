@@ -2,36 +2,40 @@
   
   SpaceSnake = root.SpaceSnake = (root.SpaceSnake || {})
   var MAX_SPEED = 10;
+  var MIN_SPEED = 5;
+  var TURN_ANGLE = 90;
   
   Snake = SpaceSnake.Snake = function(startPos) {
     this.segments = [new SnakeHead(startPos)];
     this.velocity = { angle: 0, mag: 5 }
-    this.turnAngle = 90;
   }
 
-  Snake.prototype.move = function() {
+  Snake.prototype.move = function(boardSize) {
     var dx = Math.cos(this.velocity.angle)*this.velocity.mag;
     var dy = Math.sin(this.velocity.angle)*this.velocity.mag;
+    
+    //move the segments
     for(var i = this.segments.length - 1; i > 0; i--) {
       this.segments[i].pos = this.segments[i-1].pos.slice();
     }
-    this.segments[0].pos[0] += dx;
-    this.segments[0].pos[1] += dy;
+    
+    //move the snakehead
+    this.segments[0].move(dx, dy, boardSize);
   }
 
-  Snake.prototype.grow = function(){
+  Snake.prototype.grow = function(boardSize){
     var last_segment = this.segments[this.segments.length-1];
     var new_seg_pos = [last_segment.pos[0], last_segment.pos[1]];
-    this.move();
+    this.move(boardSize);
     this.segments.push(new SnakeSegment(new_seg_pos));
   }
 
   Snake.prototype.turnRight = function() {
-    this.velocity.angle += this.turnAngle*Math.PI/180;
+    this.velocity.angle += TURN_ANGLE*Math.PI/180;
   }
 
   Snake.prototype.turnLeft = function() {
-    this.velocity.angle -= this.turnAngle*Math.PI/180;
+    this.velocity.angle -= TURN_ANGLE*Math.PI/180;
   }
   
   Snake.prototype.fire = function() {
@@ -41,7 +45,6 @@
     vel.angle = this.velocity.angle;
     
     return new SpaceSnake.Bullet(pos, vel);
-    
   }
 
   Snake.prototype.accel = function() {
@@ -54,8 +57,8 @@
 
   Snake.prototype.decel = function() {
     this.velocity.mag -= 1;
-    if (this.velocity.mag < 1) {
-      this.velocity.mag = 1;
+    if (this.velocity.mag < MIN_SPEED) {
+      this.velocity.mag = MIN_SPEED;
     }
   }
 
@@ -85,6 +88,20 @@
     this.radius = 7;
   }
 
+  SnakeHead.prototype.move = function(dx, dy, boardSize) {
+    this.pos[0] += dx;
+    this.pos[1] += dy;
+    
+    //wrapping
+    for(var i=0; i < 2; i++) {
+      if (this.pos[i] < 0) {
+        this.pos[i] += boardSize[i];
+      } else if (this.pos[i] > boardSize[i]) {
+        this.pos[i] -= boardSize[i];
+      }
+    }
+     
+  }
   SnakeHead.prototype.render = function(ctx) {
     var x = this.pos[0];
     var y = this.pos[1];
