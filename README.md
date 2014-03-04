@@ -1,6 +1,14 @@
-# SPACE SNAKE
+# Space Snake
 
-This is a mashup of Snake and Asteroids. The goal is to grow as long as possible 
+## About
+
+This is a mashup of the classic games Snake (from your old Nokia) and Asteroids (the arcade game). Play the live version [here](http://www.brianbuchholz.com/space-snake).
+
+Space Snake was written in Javascript and uses the [jQuery](http://jquery.com/), [Underscore](http://underscorejs.org/), and [mousetrap](http://craig.is/killing/mice) libraries.
+
+## Playing
+
+The goal is to grow as long as possible 
 by eating apples, but watch out for asteroids! Getting hit by one will kill you; 
 fortunately you have a photon gun in your head.
 
