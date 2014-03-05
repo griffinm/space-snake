@@ -10,14 +10,14 @@ Space Snake was written in Javascript and uses the [jQuery](http://jquery.com/),
 
 The goal is to grow as long as possible 
 by eating apples, but watch out for asteroids! Getting hit by one will kill you; 
-fortunately you have a photon gun in your head.
+fortunately you can use the gun in your head to blast them apart.
 
 ### Controls: 
 * Left: turn left
 * Right: turn right
 * Up: accelerate
 * Down: decelerate
-* Space: fire photon
+* Space: fire weapon
 
 ### Tips
 
