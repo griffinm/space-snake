@@ -1,8 +1,10 @@
 # Space Snake
 
+Live @ [brianbuchholz.com/space-snake](http://www.brianbuchholz.com/space-snake)
+
 ## About
 
-This is a mashup of the classic games Snake (from your old Nokia) and Asteroids (the arcade game). Play the live version [here](http://www.brianbuchholz.com/space-snake).
+This is a mashup of the classic games Snake (from your old Nokia) and Asteroids (the arcade game).
 
 Space Snake was written in Javascript and uses the [jQuery](http://jquery.com/), [Underscore](http://underscorejs.org/), and [mousetrap](http://craig.is/killing/mice) libraries.
 
