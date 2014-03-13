@@ -1,14 +1,15 @@
 (function(root){
-  
-  var SpaceSnake = root.SpaceSnake = (root.SpaceSnake || {})
-  var MAX_SPEED = 10;
-  var MIN_SPEED = 5;
-  var TURN_ANGLE = 90;
-  
+  'use strict';
+
+  var SpaceSnake = root.SpaceSnake = (root.SpaceSnake || {}),
+    MAX_SPEED = 10,
+    MIN_SPEED = 5,
+    TURN_ANGLE = 90;
+    
   var Snake = SpaceSnake.Snake = function(startPos) {
     this.head = new SnakeHead(startPos);
     this.segments = [this.head];
-  }
+  };
 
   Snake.prototype.move = function(boardSize) {
     //move the segments
@@ -18,27 +19,30 @@
     
     //move the snakehead
     this.head.move(boardSize);
-  }
+  };
 
   Snake.prototype.grow = function(boardSize){
     var last_segment = this.segments[this.segments.length-1];
     var new_seg_pos = [last_segment.pos[0], last_segment.pos[1]];
     this.move(boardSize);
     this.segments.push(new SnakeSegment(new_seg_pos));
-  }
+  };
 
   Snake.prototype.render = function(ctx) {
     _.each(this.segments, function(segment) {
       segment.render(ctx);
     });
-  }
+  };
   
   var SnakeHead = SpaceSnake.SnakeHead = function(pos) {
     this.pos = pos;
-    this.velocity = { angle: -Math.PI/2, mag: 5 }
+    this.velocity = { 
+      angle: -Math.PI/2,
+      mag: 5 
+    };
     this.radius = 7;
     this.color = 'green';
-  }
+  };
 
   SnakeHead.prototype.move = function(boardSize) {
     var dx = Math.cos(this.velocity.angle)*this.velocity.mag;
@@ -54,15 +58,15 @@
         this.pos[i] -= boardSize[i];
       }
     }    
-  }
+  };
   
   SnakeHead.prototype.turnRight = function() {
     this.velocity.angle += TURN_ANGLE*Math.PI/180;
-  }
+  };
 
   SnakeHead.prototype.turnLeft = function() {
     this.velocity.angle -= TURN_ANGLE*Math.PI/180;
-  }
+  };
   
   SnakeHead.prototype.accel = function() {
     this.velocity.mag += 1;
@@ -70,14 +74,14 @@
     if (this.velocity.mag > MAX_SPEED) {
       this.velocity.mag = MAX_SPEED;
     }
-  }
+  };
 
   SnakeHead.prototype.decel = function() {
     this.velocity.mag -= 1;
     if (this.velocity.mag < MIN_SPEED) {
       this.velocity.mag = MIN_SPEED;
     }
-  }
+  };
   
   SnakeHead.prototype.fire = function() {
     var pos = this.pos.slice();
@@ -87,7 +91,7 @@
     };
     
     return new SpaceSnake.Bullet(pos, vel);
-  }
+  };
   
   SnakeHead.prototype.hits = function(obj) {
     var x1 = this.pos[0];
@@ -102,32 +106,32 @@
     } else {
       return false;
     }
-  }
+  };
   
   SnakeHead.prototype.render = function(ctx) {
     var x = this.pos[0];
     var y = this.pos[1];
   
     ctx.beginPath();
-    ctx.arc(x, y, this.radius, 0, Math.PI*2)
+    ctx.arc(x, y, this.radius, 0, Math.PI*2);
     ctx.fillStyle = this.color;
     ctx.fill();
-  }
+  };
 
   var SnakeSegment = SpaceSnake.SnakeSegment = function(pos) {
     this.pos = pos;
     this.radius = 5;
     this.color = 'green';
-  }
+  };
 
   SnakeSegment.prototype.render = function(ctx) {
-    var x = this.pos[0];
-    var y = this.pos[1];
+    var x = this.pos[0],
+      y = this.pos[1];
   
     ctx.beginPath();
-    ctx.arc(x, y, this.radius, 0, Math.PI*2)
+    ctx.arc(x, y, this.radius, 0, Math.PI*2);
     ctx.fillStyle = this.color;
     ctx.fill();
-  }
+  };
     
 })(this);
